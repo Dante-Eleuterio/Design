@@ -1,86 +1,88 @@
-import java.util.*;
-
 public class Veiculo {
     private String placa;
-    private String tipo;
+    private int tipo;
     private String id;
+    private String cor;
     private boolean disponivel;
     private String modelo;
     private float precoVeiculo;
-    private int anoFabricacao;
+    private String anoFabricacao;
 
-    public Veiculo() {
-        // Constructor logic here
+    public Veiculo(String placa, int tipo, String cor, String modelo, float precoVeiculo, String anoFabricacao) {
+        this.placa = placa;
+        this.tipo = tipo;
+        this.id ="-1";
+        this.cor = cor;
+        this.disponivel = true;
+        this.modelo = modelo;
+        this.precoVeiculo = precoVeiculo;
+        this.anoFabricacao = anoFabricacao;
     }
 
-    // Getters and Setters
-    public String getPlaca() { 
-        return placa; 
+
+    public String getPlaca() {
+        return this.placa;
     }
 
-    public void setPlaca(String placa) { 
-        this.placa = placa; 
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 
-    public String getTipo() { 
-        return tipo; 
+    public int getTipo() {
+        return this.tipo;
     }
 
-    public void setTipo(String tipo) { 
-        this.tipo = tipo; 
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
     }
 
-    public String getId() { 
-        return id; 
+    public String getId() {
+        return this.id;
     }
 
-    public void setId(String id) { 
-        this.id = id; 
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public boolean isDisponivel() { 
-        return disponivel; 
+    public String getCor() {
+        return this.cor;
     }
 
-    public void setDisponivel(boolean disponivel) { 
-        this.disponivel = disponivel; 
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
-    public String getModelo() { 
-        return modelo; 
+    public boolean isDisponivel() {
+        return this.disponivel;
     }
-    
-    public void setModelo(String modelo) { 
-        this.modelo = modelo; 
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+
+    public String getModelo() {
+        return this.modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
     }
 
     public float getPrecoVeiculo() {
-        return precoVeiculo; 
-    }
-    
-    public void setPrecoVeiculo(float precoVeiculo) { 
-        this.precoVeiculo = precoVeiculo; 
+        return this.precoVeiculo;
     }
 
-    public int getAnoFabricacao() { 
-        return anoFabricacao; 
-    }
-    
-    public void setAnoFabricacao(int anoFabricacao) { 
-        this.anoFabricacao = anoFabricacao; 
+    public void setPrecoVeiculo(float precoVeiculo) {
+        this.precoVeiculo = precoVeiculo;
     }
 
-    // Additional methods
-    public void atualizaStatusVeiculo() {
-        // Method logic here
+    public String getAnoFabricacao() {
+        return this.anoFabricacao;
     }
 
-    public void addVeiculoLista(Veiculo veiculo) {
-        // Method logic here
+    public void setAnoFabricacao(String anoFabricacao) {
+        this.anoFabricacao = anoFabricacao;
     }
 
-    public static Veiculo create() {
-        // Static factory method logic
-        return new Veiculo();
-    }
+
 }

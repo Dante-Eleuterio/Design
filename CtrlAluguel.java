@@ -1,29 +1,31 @@
-import java.util.*;
+import java.util.Date;
 
 public class CtrlAluguel {
+    // Atributos conforme necessário
+    // Pode incluir referências para outras classes como Veiculo, Cliente, etc.
 
+    // Construtor
     public CtrlAluguel() {
-        // Constructor logic here
+        // Inicialização dos atributos, se necessário
     }
 
-    // Methods
-    public void solicitaAluguel(Veiculo veiculo, Date dataInicio, Date dataFim) {
-        // Logic to handle aluguel request
+    public void solicitaAluguel(Veiculo v, Date dataInicio, Date dataFim){
+        
     }
 
-    public void confirmaAluguel() {
-        // Logic to confirm aluguel
+    public void confirmaAluguel(){
+
     }
 
-    public void consultaContrato() {
-        // Logic to consult contrato
-    }
+    public void consultaContrato(){
 
-    public void efetuarPgmto(String numCartao, Date dataValidade, String cvv) {
-        // Logic to process payment
     }
+    
+    public void efetuarPgmto(String numCartao,Date dataValidade,int cvv){
 
-    public void contratarSeguro() {
-        // Logic to handle seguro contracting
+    }
+    
+    public void contratarSeguro(){
+        
     }
 }
