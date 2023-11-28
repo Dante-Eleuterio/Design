@@ -1,10 +1,11 @@
 import java.util.Scanner;
+import java.util.Vector;
 
 public class GUI{
     String slogan = "Aluguel Legal - Sua melhor escolha em aluguel de veículos!";
     Scanner scanner = new Scanner(System.in);
     CtrlCadastro cadastro = new CtrlCadastro();
-
+    CtrlAluguel aluguel = new CtrlAluguel();
     
     public static boolean isValidFloat(String input) {
         try {
@@ -19,13 +20,13 @@ public class GUI{
         String[] menuOptionsFunc = {
             "1: Cadastrar Veículo",
             "2: Mudar Senha",
-            "3: Sair da conta"
+            "3: Sair da Conta"
         };
         int choice=-1;
         String entry="-1";
-        String placa=null;
+        String placa="";
         int tipo;
-        String id = null;
+        String id ="";
         String cor;
         String modelo;
         float precoVeiculo;
@@ -114,10 +115,112 @@ public class GUI{
 
     public void menuCliente(){
         String[] menuOptionsCliente = {
-            "1: Cadastrar Veículo",
-            "2: Mudar Senha"
+            "1: Pesquisar Veículo",
+            "2: Devolver Veículo",
+            "3: Mudar Senha",
+            "4: Sair da Conta"
         };
+        int choice = -1;
+        int tipo=-1;
+        String entry = "-1";
+        Cliente cliente = cadastro.getClienteLogado();
+        while (choice != 4) {
+            while(!(entry.equals("1")|| entry.equals("2") || entry.equals("3") || entry.equals("4") )){
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                System.out.println(slogan);
+                System.out.println("Bem vindo de volta "+cliente.getNome());
+                for (String option : menuOptionsCliente) {
+                    System.out.println(option);
+                }
+                System.out.print("\nEscolha uma opção (1-4): ");
+                entry = scanner.nextLine();
+            }
+            choice=Integer.parseInt(entry);
+            entry="-1";
+            switch (choice) {
+                case 1:
+                    choice=-1;
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    System.out.println(slogan);
+                    System.out.println("Bem vindo de volta "+cliente.getNome());
+                    Vector<Veiculo> veiculos = cadastro.getVeiculos();
+                    System.out.print("Digite 0 para bicicleta,1 para carro ou 2 para retornar:");
+                    entry= scanner.nextLine();
+                    if(entry.equals("2"))
+                        break;
+                    while(!(entry.equals("0")|| entry.equals("1")) || entry.equals("2")){
+                        System.out.print("Tipo Inválido! Favor digite 0 para bicicleta,1 para carro ou 2 para retornar:");
+                        entry= scanner.nextLine();
+                    }
+                    tipo = Integer.parseInt(entry);
+                    if(tipo==1)
+                        System.out.println("Favor escolher o veículo a ser alugado com base eu sua placa:\nCaso desejar retornar digite 0");
+                    else
+                        System.out.println("Favor escolher a bicileta a ser alugado com base eu seu ID:\nCaso desejar retornar digite 0");
+                    for (Veiculo v : veiculos) {
+                        if(v.getDisponivel()){
+                            System.out.println("------------------------------------------");
+                            if(v.getTipo()==1)
+                                System.out.println("Placa: "+v.getPlaca());
+                            else
+                                System.out.println("id: "+v.getId());
+                            System.out.println("Modelo: "+v.getModelo());
+                            System.out.println("Cor: "+v.getCor());
+                            System.out.println("Ano: "+v.getAnoFabricacao());
+                            System.out.println("Preço: "+v.getPrecoVeiculo());
+                        }
+                    }   
+                    entry = scanner.nextLine();
+                    if(entry.equals("0"))
+                        break;
+                    for (Veiculo v : veiculos) {
+                        if (tipo==1 && v.getTipo()==1) {
+                            if(v.getPlaca().equals(entry)){
+                                System.out.println("Selecionou para alugar Veículo de placa "+v.getPlaca());
+                                System.out.println("Por favor digite o dia de inicio do alugue");
+                            }
+                        
+                        
+                        }else if(tipo == 2 && v.getTipo()==2){
+                            if(v.getId().equals(entry)){
 
+                        }
+                        }
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    String novaSenha="aux";
+                    String novaSenhaCopia="aux1";
+                    choice=-1;
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    System.out.println("Deseja trocar a senha?\nDigite qualquer tecla para confirmar ou 2 para retornar:");
+                    entry=scanner.nextLine();
+                    if(entry.equals("2"))
+                        break;
+                    System.out.println("Favor digitar a nova senha:");
+                        novaSenha= scanner.nextLine();
+                        System.out.println("Favor digitar novamente a mesma senha:");
+                        novaSenhaCopia= scanner.nextLine();
+                    while(!novaSenha.equals(novaSenhaCopia)){
+                        System.out.println("As entradas devem ser iguais!");
+                        System.out.println("Favor digitar a nova senha:");
+                        novaSenha= scanner.nextLine();
+                        System.out.println("Favor digitar novamente a mesma senha:");
+                        novaSenhaCopia= scanner.nextLine();
+                    }
+                    cadastro.definirSenha(novaSenha,0);
+                    break;
+                case 4:
+                    break;
+                default:
+                    System.out.println("Opção inválida, tente novamente.");
+            }
+        }
     }
 
     public void menuPrincipal(){
@@ -212,8 +315,12 @@ public class GUI{
                         if(!logou)
                             System.out.println("Usuário ou senha errados");
                         else{
-                            menuFunc();
+                            if(tipo.equals("0"))
+                                menuFunc();
+                            else
+                                menuCliente();
                         }
+
                     }
                     logou=false;
                     break;

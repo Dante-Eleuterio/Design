@@ -1,12 +1,10 @@
 import java.util.Date;
 
 public class CtrlAluguel {
-    // Atributos conforme necessário
-    // Pode incluir referências para outras classes como Veiculo, Cliente, etc.
+    Cliente cliente;
+    Veiculo v;
 
-    // Construtor
-    public CtrlAluguel() {
-        // Inicialização dos atributos, se necessário
+    public CtrlAluguel(Cliente c,Veiculo v ) {
     }
 
     public void solicitaAluguel(Veiculo v, Date dataInicio, Date dataFim){

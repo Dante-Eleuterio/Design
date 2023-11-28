@@ -13,8 +13,9 @@ public class CtrlCadastro {
         clientes = new Vector<>();
         veiculos = new Vector<>();
         logado=false;
-        this.cadastrarUsuario("Júlio César", "julio123", "jc@email.com", "123mudar",0);
-        this.cadastrarVeiculo("123abc", 0, "0", "Preto", "Toyota Yaris", 2000, "2018");
+        this.cadastrarUsuario("Júlio César", "julio123", "jc@email.com", "123mudar",1);
+        this.cadastrarVeiculo("", 0, Integer.toString(this.veiculos.size()), "preta", "kaloi", 700, "2010");
+        this.cadastrarVeiculo("123abc", 1, "0", "Preto", "Toyota Yaris", 2000, "2018");
     }
 
     public void cadastrarUsuario(String nome, String login, String email, String senha,int tipo){

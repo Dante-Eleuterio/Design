@@ -59,6 +59,10 @@ public class Veiculo {
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
     }
+    
+    public boolean getDisponivel() {
+        return this.disponivel;
+    }
 
     public String getModelo() {
         return this.modelo;

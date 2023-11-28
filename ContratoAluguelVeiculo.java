@@ -11,7 +11,9 @@ public class ContratoAluguelVeiculo {
 
     // Construtor
     public ContratoAluguelVeiculo(Veiculo v,Date dataInicio, Date dataFinal) {
-        // Inicialização dos atributos
+        this.v=v;
+        this.dataInicio=dataInicio;
+        this.dataFinal=dataFinal;
     }
 
     public float calculaMulta(Date dataHoje){
