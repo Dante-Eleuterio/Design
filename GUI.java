@@ -142,7 +142,7 @@ public class GUI{
             while(!(entry.equals("1")|| entry.equals("2") || entry.equals("3"))){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
-                System.out.println("\n" + slogan);
+                System.out.println(slogan);
                     for (String option : menuOptions) {
                     System.out.println(option);
                 }
