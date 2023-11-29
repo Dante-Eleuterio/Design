@@ -13,7 +13,7 @@ public class ContratoAluguelVeiculo {
     // Construtor
     public ContratoAluguelVeiculo(Veiculo v,LocalDate dataInicio, LocalDate dataFinal) {
         this.veiculo=v;
-        this.veiculo.setDisponivel(false);
+        this.veiculo.atualizaStatusVeiculo();
         this.dataInicio=dataInicio;
         this.dataFinal=dataFinal;
         if(v.getTipo()==1)
@@ -30,7 +30,8 @@ public class ContratoAluguelVeiculo {
     }
 
     public void efetuarPgmto(String numCartao, String dataValidade, String cvv){
-
+        this.veiculo.atualizaStatusVeiculo();
+        this.pago=true;
     }
 
     public void incluirSeguro(){
@@ -39,6 +40,11 @@ public class ContratoAluguelVeiculo {
     }
 
     // Getters e setters
+
+    public Veiculo getVeiculo(){
+        return veiculo;
+    }
+
     public String getIdAluguel() {
         return idAluguel;
     }

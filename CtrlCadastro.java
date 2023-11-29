@@ -14,7 +14,7 @@ public class CtrlCadastro {
         veiculos = new Vector<>();
         logado=false;
         this.cadastrarUsuario("Júlio César", "julio123", "jc@email.com", "123mudar",1);
-        this.cadastrarVeiculo("", 0, "10", "preta", "kaloi", 700, "2010");
+        this.cadastrarVeiculo("-1", 2, "10", "preta", "kaloi", 700, "2010");
         this.cadastrarVeiculo("123abc", 1, "0", "Preto", "Toyota Yaris", 2000, "2018");
     }
 
@@ -29,7 +29,7 @@ public class CtrlCadastro {
     }
 
     public void cadastrarVeiculo(String placa, int tipo, String id, String cor, String modelo, float precoAluguel, String anoFabricacao){
-        Veiculo veiculo = new Veiculo(placa, tipo, cor, modelo, precoAluguel, anoFabricacao);
+        Veiculo veiculo = new Veiculo(placa,id, tipo, cor, modelo, precoAluguel, anoFabricacao);
         veiculos.add(veiculo);
     }
 

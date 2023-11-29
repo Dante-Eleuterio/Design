@@ -8,10 +8,10 @@ public class Veiculo {
     private float precoVeiculo;
     private String anoFabricacao;
 
-    public Veiculo(String placa, int tipo, String cor, String modelo, float precoVeiculo, String anoFabricacao) {
+    public Veiculo(String placa,String id, int tipo, String cor, String modelo, float precoVeiculo, String anoFabricacao) {
         this.placa = placa;
         this.tipo = tipo;
-        this.id ="-1";
+        this.id =id;
         this.cor = cor;
         this.disponivel = true;
         this.modelo = modelo;
@@ -19,6 +19,12 @@ public class Veiculo {
         this.anoFabricacao = anoFabricacao;
     }
 
+    public void atualizaStatusVeiculo(){
+        if(this.disponivel==true)
+            disponivel=false;
+        else
+            disponivel=true;
+    }
 
     public String getPlaca() {
         return this.placa;

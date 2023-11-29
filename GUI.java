@@ -58,7 +58,7 @@ public class GUI{
                     input= scanner.nextLine();
                     if(input.equals("2"))
                         break;
-                    while(!(input.equals("0")|| input.equals("1")) || input.equals("2")){
+                    while(!(input.equals("0")|| input.equals("1") || input.equals("2"))){
                         System.out.print("Tipo Inválido! Favor digite 0 para bicicleta,1 para carro ou 2 para retornar:");
                         input= scanner.nextLine();
                     }
@@ -66,6 +66,9 @@ public class GUI{
                     if(input.equals("1")){
                         System.out.print("Favor digitar a placa do veículo:");
                         placa= scanner.nextLine();
+                    }else{
+                        System.out.print("Favor digitar o ID da bicicleta:");
+                        id= scanner.nextLine();
                     }
                     System.out.print("Favor digitar a cor do veículo:");
                     cor= scanner.nextLine();
@@ -130,6 +133,7 @@ public class GUI{
         LocalDate dataInicio;
         LocalDate dataFim;
         while (choice != 4) {
+            input="-1";
             while(!(input.equals("1")|| input.equals("2") || input.equals("3") || input.equals("4") )){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
@@ -151,19 +155,21 @@ public class GUI{
                     System.out.println(slogan);
                     System.out.println("Bem vindo de volta "+cliente.getNome());
                     Vector<Veiculo> veiculos = cadastro.getVeiculos();
-                    System.out.print("Digite 0 para bicicleta,1 para carro ou 2 para retornar:");
+                    System.out.print("Favor digite 0 para retornar,1 para carro ou 2 para bicicleta:");
                     input= scanner.nextLine();
-                    if(input.equals("2"))
+                    if(input.equals("0"))
                         break;
-                    while(!(input.equals("0")|| input.equals("1")) || input.equals("2")){
-                        System.out.print("Tipo Inválido! Favor digite 0 para bicicleta,1 para carro ou 2 para retornar:");
+                    while(!(input.equals("0")|| input.equals("1") || input.equals("2"))){
+                        System.out.print("Tipo Inválido! Favor digite 0 para retornar,1 para carro ou 2 para bicicleta:");
                         input= scanner.nextLine();
+                        if(input.equals("0"))
+                            break;
                     }
                     tipo = Integer.parseInt(input);
                     if(tipo==1)
-                        System.out.println("Favor escolher o veículo a ser alugado com base eu sua placa:\nCaso desejar retornar digite 0");
+                        System.out.println("\nFavor escolher o veículo a ser alugado com base em sua placa:\nCaso desejar retornar digite 0");
                     else
-                        System.out.println("Favor escolher a bicileta a ser alugado com base eu seu ID:\nCaso desejar retornar digite 0");
+                        System.out.println("\nFavor escolher a bicileta a ser alugado com base em seu ID:\nCaso desejar retornar digite 0");
                     for (Veiculo v : veiculos) {
                         if(v.getDisponivel() && (v.getTipo()==tipo)){
                             System.out.println("------------------------------------------");
@@ -178,71 +184,211 @@ public class GUI{
                         }
                     }   
                     input = scanner.nextLine();
-                    if(input.equals("0"))
+                    if(input.equals("0")){
                         break;
+                    }
                     for (Veiculo v : veiculos) {
                         if (tipo==1 && v.getTipo()==1) {
-                            if(v.getPlaca().equals(input)){
-                                System.out.println("Selecionou para alugar Veículo de placa "+v.getPlaca());
-                                System.out.println("Por favor digite a data de inicio do aluguel (Dia-Mês-Ano):");
-                                while(true){
-                                    try {
-                                        input= scanner.nextLine();
-                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                                        dataInicio = LocalDate.parse(input, formatter);
-                                        break;
-                                    } catch (DateTimeParseException e) {
-                                        System.out.println("Data inválida. Favor digitar uma entrada no formato (Dia-Mês-Ano) ");
-                                    }
-                                }
-                                System.out.println("Por favor digite a data de devolução do veículo (Dia-Mês-Ano):");
-                                while(true){
-                                    try {
-                                        input= scanner.nextLine();
-                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                                        dataFim = LocalDate.parse(input, formatter);
-                                        int result = dataInicio.compareTo(dataFim);
-                                        if (result>=0)
-                                            System.out.println("A data de devolução deve vir após a data de início.Favor digitar novamente:");
-                                        else{
-                                            long dias = ChronoUnit.DAYS.between(dataInicio, dataFim);
-                                            System.out.println("O aluguel custará "+(v.getPrecoVeiculo()* dias));
-                                            System.out.println("Gostaria de adicionar o seguro ao custo de 50 reais ao dia? O preço total nesse caso será de "+ ((v.getPrecoVeiculo() + 50)* dias));
-                                            System.out.println("Digite 0 para retornar, 1 para proseguir sem seguro e 2 para prosseguir com seguro:");
+                            while(true){
+                                if(v.getPlaca().equals(input)){
+                                    System.out.println("Selecionou para alugar Veículo de placa "+v.getPlaca());
+                                    System.out.println("Por favor digite a data de inicio do aluguel (Dia-Mês-Ano):");
+                                    while(true){
+                                        try {
                                             input= scanner.nextLine();
-                                            if(input.equals("0"))
-                                                break;
-                                            while(!(input.equals("1")) || input.equals("2")){
-                                                System.out.println("Valor inválido. Digite 0 para retornar, 1 para proseguir sem seguro e 2 para prosseguir com seguro:");
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                            dataInicio = LocalDate.parse(input, formatter);
+                                            break;
+                                        } catch (DateTimeParseException e) {
+                                            System.out.println("Data inválida. Favor digitar uma entrada no formato (Dia-Mês-Ano) ");
+                                        }
+                                    }
+                                    System.out.println("Por favor digite a data de devolução do veículo (Dia-Mês-Ano):");
+                                    while(true){
+                                        try {
+                                            input= scanner.nextLine();
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                            dataFim = LocalDate.parse(input, formatter);
+                                            int result = dataInicio.compareTo(dataFim);
+                                            if (result>=0)
+                                                System.out.println("A data de devolução deve vir após a data de início.Favor digitar novamente:");
+                                            else{
+                                                long dias = ChronoUnit.DAYS.between(dataInicio, dataFim);
+                                                System.out.println("O aluguel custará "+(v.getPrecoVeiculo()* dias));
+                                                System.out.println("Gostaria de adicionar o seguro ao custo de 50 reais ao dia? O preço total nesse caso será de "+ ((v.getPrecoVeiculo() + 50)* dias));
+                                                System.out.println("Digite 0 para retornar, 1 para proseguir sem seguro e 2 para prosseguir com seguro:");
                                                 input= scanner.nextLine();
                                                 if(input.equals("0"))
                                                     break;
-                                            }                       
+                                                while(!((input.equals("1")) || input.equals("2"))){
+                                                    System.out.println("Valor inválido. Digite 0 para retornar, 1 para proseguir sem seguro e 2 para prosseguir com seguro:");
+                                                    input= scanner.nextLine();
+                                                    if(input.equals("0"))
+                                                        break;
+                                                }                       
+                                            
+                                                if (input.equals("1")) 
+                                                    System.out.println("Gostaria de confirmar o aluguel no custo de "+ (v.getPrecoVeiculo()* dias)+"?");
+                                                else
+                                                    System.out.println("Gostaria de confirmar o aluguel no custo de "+ ((v.getPrecoVeiculo() + 50)* dias)+"?");
+                                                System.out.println("Digite 0 para cancelar e 1 para confirmar");
+                                                input= scanner.nextLine();
+                                                if(input.equals("0"))
+                                                    break;
+                                                while(!(input.equals("1"))){
+                                                    System.out.println("Valor inválido. Digite 0 para cancelar e 1 para confirmar");
+                                                    input= scanner.nextLine();
+                                                    if(input.equals("0"))
+                                                        break;
+                                                }      
                                                 CtrlAluguel aluguel = new CtrlAluguel(cliente, v);
                                                 aluguel.solicitaAluguel(v, dataInicio, dataFim);
                                                 if (input.equals("2")) 
                                                     aluguel.contratarSeguro();
+                                                break;
+                                            }
+                                        }
+                                        catch (DateTimeParseException e) {
+                                            System.out.println("Data inválida. Favor digitar uma entrada no formato (Dia-Mês-Ano) ");
+                                        }
+                                    }
+                                    break;
+                                }else{
+                                    System.out.println("Não foi encontrado nenhum veículo com essa placa. Favor digitar novamente ou digite 0 para sair");
+                                    input = scanner.nextLine();
+                                    if(input.equals("0"))
+                                        break;
+                                }
+                            }
+                        }else if(tipo == 2 && v.getTipo()==2){
+                            while(true){
+                                if(v.getId().equals(input)){
+                                    System.out.println("Selecionou para alugar Bicileta de ID "+v.getId());
+                                    while(true){
+                                        System.out.println("Por favor digite a data de inicio do aluguel (Dia-Mês-Ano):");
+                                        try {
+                                            input= scanner.nextLine();
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                            dataInicio = LocalDate.parse(input, formatter);
+                                            break;
+                                        } catch (DateTimeParseException e) {
+                                            System.out.println("Data inválida. Favor digitar uma entrada no formato (Dia-Mês-Ano) ");
+                                        }
+                                    }
+                                    System.out.println("Por favor digite a data de devolução do veículo (Dia-Mês-Ano):");
+                                    while(true){
+                                        try {
+                                            input= scanner.nextLine();
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                            dataFim = LocalDate.parse(input, formatter);
+                                            int result = dataInicio.compareTo(dataFim);
+                                            if (result>=0)
+                                                System.out.println("A data de devolução deve vir após a data de início.Favor digitar novamente:");
+                                            else{
+                                                long dias = ChronoUnit.DAYS.between(dataInicio, dataFim);
+                                                System.out.println("O aluguel custará "+(v.getPrecoVeiculo()* dias));
+                                                System.out.println("Gostaria de adicionar o seguro ao custo de 50 reais ao dia? O preço total nesse caso será de "+ ((v.getPrecoVeiculo() + 50)* dias));
+                                                System.out.println("Digite 0 para retornar, 1 para proseguir sem seguro e 2 para prosseguir com seguro:");
+                                                input= scanner.nextLine();
+                                                if(input.equals("0"))
+                                                    break;
+                                                while(!((input.equals("1")) || input.equals("2"))){
+                                                    System.out.println("Valor inválido. Digite 0 para retornar, 1 para proseguir sem seguro e 2 para prosseguir com seguro:");
+                                                    input= scanner.nextLine();
+                                                    if(input.equals("0"))
+                                                        break;
+                                                }                       
+                                                if (input.equals("1")) 
+                                                    System.out.println("Gostaria de confirmar o aluguel no custo de "+ (v.getPrecoVeiculo()* dias)+"?");
+                                                else
+                                                    System.out.println("Gostaria de confirmar o aluguel no custo de "+ ((v.getPrecoVeiculo() + 50)* dias)+"?");
+                                                System.out.println("Digite 0 para cancelar e 1 para confirmar");
+                                                input= scanner.nextLine();
+                                                if(input.equals("0"))
+                                                    break;
+                                                while(!(input.equals("1"))){
+                                                    System.out.println("Valor inválido. Digite 0 para cancelar e 1 para confirmar");
+                                                    input= scanner.nextLine();
+                                                    if(input.equals("0"))
+                                                        break;
+                                                }      
+                                                CtrlAluguel aluguel = new CtrlAluguel(cliente, v);
+                                                aluguel.solicitaAluguel(v, dataInicio, dataFim);
+                                                if (input.equals("2")) 
+                                                    aluguel.contratarSeguro();
+                                                break;
                                             }
                                             break;
-
                                         }
-
-                                    } catch (DateTimeParseException e) {
-                                        System.out.println("Data inválida. Favor digitar uma entrada no formato (Dia-Mês-Ano) ");
+                                        catch (DateTimeParseException e) {
+                                            System.out.println("Data inválida. Favor digitar uma entrada no formato (Dia-Mês-Ano) ");
+                                        }
                                     }
+                                }else{
+                                    System.out.println("Não foi encontrado nenhuma bicileta com esse ID. Favor digitar novamente ou digite 0 para sair");
+                                    input = scanner.nextLine();
+                                    if(input.equals("0"))
+                                        break;
                                 }
-
+                                break;
                             }
-                        
-                        
-                        }else if(tipo == 2 && v.getTipo()==2){
-                            if(v.getId().equals(input)){
-
-                        }
                         }
                     }
                     break;
                 case 2:
+                    ContratoAluguelVeiculo contrato = cliente.consultaContrato();
+                    if (contrato !=null){
+                        Veiculo veiculo = contrato.getVeiculo();
+                        if(veiculo.getTipo()==1){
+                            System.out.println("Veículo alugado:");
+                            System.out.println("Placa do Veículo: "+veiculo.getPlaca());
+                        }else{
+                            System.out.println("Bicileta alugada:");
+                            System.out.println("Id da Bicicleta: "+veiculo.getId());
+                        }
+                        System.out.println("Cor: "+veiculo.getCor());
+                        System.out.println("Modelo: "+veiculo.getModelo());
+                        System.out.println("Ano: "+ veiculo.getAnoFabricacao());
+                        LocalDate hoje = LocalDate.now();
+                        float multa =  contrato.calculaMulta(hoje);
+                        if(multa >0){
+                            System.out.println("Você possui multa de "+multa+" reais");
+                            System.out.println("Total do aluguel = "+(contrato.getPrecoAluguel()+multa));
+                        }else{
+                            System.out.println("Total do aluguel = "+contrato.getPrecoAluguel());
+                        }
+                        System.out.println("------------------------------------------");
+                        System.out.println("\nGostaria de devolver o veículo? Digite 0 para cancelar ou 1 para confirmar");
+                        input = scanner.nextLine();
+                        if(input.equals("0"))
+                            break;
+                        while(!(input.equals("1"))){
+                            System.out.print("Tipo Inválido! Favor digite 0 para retornar ou 1 para confirmar");
+                            input= scanner.nextLine();
+                            if(input.equals("0"))
+                                break;
+                        }
+                        System.out.println("Digite 0 em qualquer um dos próximos campos para cancelar a operação");
+                        System.out.println("Favor digitar o número do cartão:");
+                        String cartao= scanner.nextLine();
+                        if(cartao.equals("0"))
+                            break;
+                        System.out.println("Favor digitar a data de validade do cartão:");
+                        String validade = scanner.nextLine();
+                        if(validade.equals("0"))
+                            break;
+                        System.out.println("Favor digitar o cvv do cartão:");
+                        String cvv = scanner.nextLine();
+                        if(cvv.equals("0"))
+                            break;
+                        cliente.efetuarPgmto(cartao, validade, cvv);
+                        System.out.println("Veículo devolvido,Obrigado por contar conosco e esperamos te ver novamente!");
+                        System.out.println("Pressione qualquer tecla para retornar");
+                        scanner.nextLine();
+                    }else{
+                        System.out.println("Cliente não possui contratos ativos. Favor pressionar qualquer tecla para retornar");
+                        scanner.nextLine();
+                    }
                     break;
                 case 3:
                     String novaSenha="aux";
@@ -271,7 +417,8 @@ public class GUI{
                     break;
                 default:
                     System.out.println("Opção inválida, tente novamente.");
-            }
+                
+           }
         }
     }
 
@@ -352,7 +499,7 @@ public class GUI{
                         tipo= scanner.nextLine();
                         if(tipo.equals("2"))
                             break;
-                        while(!(tipo.equals("0")|| tipo.equals("1")) || tipo.equals("2")){
+                        while(!(tipo.equals("0")|| tipo.equals("1") || tipo.equals("2"))){
                             System.out.println("Tipo Inválido! Favor digite 0 se for funcionário,1 se for cliente ou 2 para retornar:");
                             tipo= scanner.nextLine();
                             if(tipo.equals("2"))
