@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -5,7 +9,6 @@ public class GUI{
     String slogan = "Aluguel Legal - Sua melhor escolha em aluguel de veículos!";
     Scanner scanner = new Scanner(System.in);
     CtrlCadastro cadastro = new CtrlCadastro();
-    CtrlAluguel aluguel = new CtrlAluguel();
     
     public static boolean isValidFloat(String input) {
         try {
@@ -23,7 +26,7 @@ public class GUI{
             "3: Sair da Conta"
         };
         int choice=-1;
-        String entry="-1";
+        String input="-1";
         String placa="";
         int tipo;
         String id ="";
@@ -33,7 +36,7 @@ public class GUI{
         String anoFabricacao;
         Funcionario func = cadastro.getFuncionarioLogado();
         while (choice != 3) {
-            while(!(entry.equals("1")|| entry.equals("2") || entry.equals("3"))){
+            while(!(input.equals("1")|| input.equals("2") || input.equals("3"))){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
                 System.out.println(slogan);
@@ -42,25 +45,25 @@ public class GUI{
                     System.out.println(option);
                 }
                 System.out.print("\nEscolha uma opção (1-3): ");
-                entry = scanner.nextLine();
+                input = scanner.nextLine();
             }
-            choice=Integer.parseInt(entry);
-            entry="-1";
+            choice=Integer.parseInt(input);
+            input="-1";
             switch (choice) {
                 case 1:
                     choice=-1;
                     System.out.print("\033[H\033[2J");  
                     System.out.flush();
                     System.out.print("Digite 0 para bicicleta,1 para carro ou 2 para retornar:");
-                    entry= scanner.nextLine();
-                    if(entry.equals("2"))
+                    input= scanner.nextLine();
+                    if(input.equals("2"))
                         break;
-                    while(!(entry.equals("0")|| entry.equals("1")) || entry.equals("2")){
+                    while(!(input.equals("0")|| input.equals("1")) || input.equals("2")){
                         System.out.print("Tipo Inválido! Favor digite 0 para bicicleta,1 para carro ou 2 para retornar:");
-                        entry= scanner.nextLine();
+                        input= scanner.nextLine();
                     }
-                    tipo = Integer.parseInt(entry);
-                    if(entry.equals("1")){
+                    tipo = Integer.parseInt(input);
+                    if(input.equals("1")){
                         System.out.print("Favor digitar a placa do veículo:");
                         placa= scanner.nextLine();
                     }
@@ -69,12 +72,12 @@ public class GUI{
                     System.out.print("Favor digitar o modelo do veículo:");
                     modelo= scanner.nextLine();
                     System.out.print("Favor digitar o preço do veículo:");
-                    entry= scanner.nextLine();
-                    while(!isValidFloat(entry)) {
+                    input= scanner.nextLine();
+                    while(!isValidFloat(input)) {
                         System.out.print("Favor digitar um preço válido para o veículo:");
-                        entry= scanner.nextLine();
+                        input= scanner.nextLine();
                     }
-                    precoVeiculo= Integer.parseInt(entry);                    
+                    precoVeiculo= Integer.parseInt(input);                    
                     System.out.print("Favor digitar o ano de fabricação do veículo:");
                     anoFabricacao = scanner.nextLine();
                     cadastro.cadastrarVeiculo(placa, tipo, id, cor, modelo, precoVeiculo,anoFabricacao);
@@ -87,8 +90,8 @@ public class GUI{
                     System.out.print("\033[H\033[2J");  
                     System.out.flush();
                     System.out.println("Deseja trocar a senha?\nDigite qualquer tecla para confirmar ou 2 para retornar:");
-                    entry=scanner.nextLine();
-                    if(entry.equals("2"))
+                    input=scanner.nextLine();
+                    if(input.equals("2"))
                         break;
                     System.out.println("Favor digitar a nova senha:");
                         novaSenha= scanner.nextLine();
@@ -122,10 +125,12 @@ public class GUI{
         };
         int choice = -1;
         int tipo=-1;
-        String entry = "-1";
+        String input = "-1";
         Cliente cliente = cadastro.getClienteLogado();
+        LocalDate dataInicio;
+        LocalDate dataFim;
         while (choice != 4) {
-            while(!(entry.equals("1")|| entry.equals("2") || entry.equals("3") || entry.equals("4") )){
+            while(!(input.equals("1")|| input.equals("2") || input.equals("3") || input.equals("4") )){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
                 System.out.println(slogan);
@@ -134,10 +139,10 @@ public class GUI{
                     System.out.println(option);
                 }
                 System.out.print("\nEscolha uma opção (1-4): ");
-                entry = scanner.nextLine();
+                input = scanner.nextLine();
             }
-            choice=Integer.parseInt(entry);
-            entry="-1";
+            choice=Integer.parseInt(input);
+            input="-1";
             switch (choice) {
                 case 1:
                     choice=-1;
@@ -147,20 +152,20 @@ public class GUI{
                     System.out.println("Bem vindo de volta "+cliente.getNome());
                     Vector<Veiculo> veiculos = cadastro.getVeiculos();
                     System.out.print("Digite 0 para bicicleta,1 para carro ou 2 para retornar:");
-                    entry= scanner.nextLine();
-                    if(entry.equals("2"))
+                    input= scanner.nextLine();
+                    if(input.equals("2"))
                         break;
-                    while(!(entry.equals("0")|| entry.equals("1")) || entry.equals("2")){
+                    while(!(input.equals("0")|| input.equals("1")) || input.equals("2")){
                         System.out.print("Tipo Inválido! Favor digite 0 para bicicleta,1 para carro ou 2 para retornar:");
-                        entry= scanner.nextLine();
+                        input= scanner.nextLine();
                     }
-                    tipo = Integer.parseInt(entry);
+                    tipo = Integer.parseInt(input);
                     if(tipo==1)
                         System.out.println("Favor escolher o veículo a ser alugado com base eu sua placa:\nCaso desejar retornar digite 0");
                     else
                         System.out.println("Favor escolher a bicileta a ser alugado com base eu seu ID:\nCaso desejar retornar digite 0");
                     for (Veiculo v : veiculos) {
-                        if(v.getDisponivel()){
+                        if(v.getDisponivel() && (v.getTipo()==tipo)){
                             System.out.println("------------------------------------------");
                             if(v.getTipo()==1)
                                 System.out.println("Placa: "+v.getPlaca());
@@ -172,19 +177,66 @@ public class GUI{
                             System.out.println("Preço: "+v.getPrecoVeiculo());
                         }
                     }   
-                    entry = scanner.nextLine();
-                    if(entry.equals("0"))
+                    input = scanner.nextLine();
+                    if(input.equals("0"))
                         break;
                     for (Veiculo v : veiculos) {
                         if (tipo==1 && v.getTipo()==1) {
-                            if(v.getPlaca().equals(entry)){
+                            if(v.getPlaca().equals(input)){
                                 System.out.println("Selecionou para alugar Veículo de placa "+v.getPlaca());
-                                System.out.println("Por favor digite o dia de inicio do alugue");
+                                System.out.println("Por favor digite a data de inicio do aluguel (Dia-Mês-Ano):");
+                                while(true){
+                                    try {
+                                        input= scanner.nextLine();
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                        dataInicio = LocalDate.parse(input, formatter);
+                                        break;
+                                    } catch (DateTimeParseException e) {
+                                        System.out.println("Data inválida. Favor digitar uma entrada no formato (Dia-Mês-Ano) ");
+                                    }
+                                }
+                                System.out.println("Por favor digite a data de devolução do veículo (Dia-Mês-Ano):");
+                                while(true){
+                                    try {
+                                        input= scanner.nextLine();
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                        dataFim = LocalDate.parse(input, formatter);
+                                        int result = dataInicio.compareTo(dataFim);
+                                        if (result>=0)
+                                            System.out.println("A data de devolução deve vir após a data de início.Favor digitar novamente:");
+                                        else{
+                                            long dias = ChronoUnit.DAYS.between(dataInicio, dataFim);
+                                            System.out.println("O aluguel custará "+(v.getPrecoVeiculo()* dias));
+                                            System.out.println("Gostaria de adicionar o seguro ao custo de 50 reais ao dia? O preço total nesse caso será de "+ ((v.getPrecoVeiculo() + 50)* dias));
+                                            System.out.println("Digite 0 para retornar, 1 para proseguir sem seguro e 2 para prosseguir com seguro:");
+                                            input= scanner.nextLine();
+                                            if(input.equals("0"))
+                                                break;
+                                            while(!(input.equals("1")) || input.equals("2")){
+                                                System.out.println("Valor inválido. Digite 0 para retornar, 1 para proseguir sem seguro e 2 para prosseguir com seguro:");
+                                                input= scanner.nextLine();
+                                                if(input.equals("0"))
+                                                    break;
+                                            }                       
+                                                CtrlAluguel aluguel = new CtrlAluguel(cliente, v);
+                                                aluguel.solicitaAluguel(v, dataInicio, dataFim);
+                                                if (input.equals("2")) 
+                                                    aluguel.contratarSeguro();
+                                            }
+                                            break;
+
+                                        }
+
+                                    } catch (DateTimeParseException e) {
+                                        System.out.println("Data inválida. Favor digitar uma entrada no formato (Dia-Mês-Ano) ");
+                                    }
+                                }
+
                             }
                         
                         
                         }else if(tipo == 2 && v.getTipo()==2){
-                            if(v.getId().equals(entry)){
+                            if(v.getId().equals(input)){
 
                         }
                         }
@@ -199,8 +251,8 @@ public class GUI{
                     System.out.print("\033[H\033[2J");  
                     System.out.flush();
                     System.out.println("Deseja trocar a senha?\nDigite qualquer tecla para confirmar ou 2 para retornar:");
-                    entry=scanner.nextLine();
-                    if(entry.equals("2"))
+                    input=scanner.nextLine();
+                    if(input.equals("2"))
                         break;
                     System.out.println("Favor digitar a nova senha:");
                         novaSenha= scanner.nextLine();
@@ -236,13 +288,13 @@ public class GUI{
         String email;
         String senha;
         String tipo;
-        String entry="-1";
+        String input="-1";
         String senhaAdmin;
         int aux;
         Boolean logou=false;
 
         while (choice != 3) {
-            while(!(entry.equals("1")|| entry.equals("2") || entry.equals("3"))){
+            while(!(input.equals("1")|| input.equals("2") || input.equals("3"))){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
                 System.out.println(slogan);
@@ -250,10 +302,10 @@ public class GUI{
                     System.out.println(option);
                 }
                 System.out.print("\nEscolha uma opção (1-3): ");
-                entry = scanner.nextLine();
+                input = scanner.nextLine();
             }
-            choice=Integer.parseInt(entry);
-            entry="-1";
+            choice=Integer.parseInt(input);
+            input="-1";
             switch (choice) {
                 case 1:
                     choice=-1;

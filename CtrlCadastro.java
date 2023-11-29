@@ -14,7 +14,7 @@ public class CtrlCadastro {
         veiculos = new Vector<>();
         logado=false;
         this.cadastrarUsuario("Júlio César", "julio123", "jc@email.com", "123mudar",1);
-        this.cadastrarVeiculo("", 0, Integer.toString(this.veiculos.size()), "preta", "kaloi", 700, "2010");
+        this.cadastrarVeiculo("", 0, "10", "preta", "kaloi", 700, "2010");
         this.cadastrarVeiculo("123abc", 1, "0", "Preto", "Toyota Yaris", 2000, "2018");
     }
 

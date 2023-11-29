@@ -1,23 +1,41 @@
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class ContratoAluguelVeiculo {
     private String idAluguel;
-    private Date dataInicio;
-    private Date dataFinal;
+    private LocalDate dataInicio;
+    private LocalDate dataFinal;
     private float precoAluguel;
     private boolean pago;
-    private Veiculo v;
+    private Veiculo veiculo;
     private Seguro s;
 
     // Construtor
-    public ContratoAluguelVeiculo(Veiculo v,Date dataInicio, Date dataFinal) {
-        this.v=v;
+    public ContratoAluguelVeiculo(Veiculo v,LocalDate dataInicio, LocalDate dataFinal) {
+        this.veiculo=v;
+        this.veiculo.setDisponivel(false);
         this.dataInicio=dataInicio;
         this.dataFinal=dataFinal;
+        if(v.getTipo()==1)
+            this.idAluguel=v.getPlaca();
+        else
+            this.idAluguel=v.getId();
+        long dias = ChronoUnit.DAYS.between(dataInicio, dataFinal);
+        this.precoAluguel=(v.getPrecoVeiculo()* dias);
     }
 
-    public float calculaMulta(Date dataHoje){
-        return 0.5f;
+    public float calculaMulta(LocalDate dataHoje){
+        long dias = ChronoUnit.DAYS.between(this.dataInicio, dataHoje);
+        return 50 * dias;
+    }
+
+    public void efetuarPgmto(String numCartao, String dataValidade, String cvv){
+
+    }
+
+    public void incluirSeguro(){
+        this.s = new Seguro();
+        this.s.setIdSeguro(idAluguel);
     }
 
     // Getters e setters
@@ -29,19 +47,19 @@ public class ContratoAluguelVeiculo {
         this.idAluguel = idAluguel;
     }
 
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataFinal() {
+    public LocalDate getDataFinal() {
         return dataFinal;
     }
 
-    public void setDataFinal(Date dataFinal) {
+    public void setDataFinal(LocalDate dataFinal) {
         this.dataFinal = dataFinal;
     }
 
